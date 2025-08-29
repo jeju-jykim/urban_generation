@@ -1,0 +1,25 @@
+Role: Rule synthesizer with zones.
+
+Inputs:
+- library_with_context.json from map_to_library.py (includes context.global and context.labels with row stats, snap angles, coverage, etc.).
+- Optional ACTIVE_LABELS list to restrict to a small archetype set.
+
+Task:
+Produce a SINGLE rules JSON (schema below) INCLUDING a minimal zone plan:
+- edge_ring width from edge_rate & setbacks (typ. 10–30 m).
+- row_bands from context.labels of slab-like labels (medians for count/spacing/band_width).
+- core_blocks enabled only if any *Block label exists; set min_pocket_area near observed pocket sizes; small max_count (1–4).
+- tower_scatter across/along from tower-like labels or infer (20–35 m) if absent.
+- angles.snap/jitter from context.global.snap_angles_deg and dispersion; main_axis_angle = dominant snap.
+- density.coverage_target ≈ context.global.coverage_mean clipped to 0.08–0.45.
+
+Return JSON only (no commentary).
+
+Schema:  (use the same schema as in Stage-2B above)
+
+DATA:
+<<< paste library_with_context.json here >>>
+ACTIVE_LABELS:
+<<< optional comma-separated labels or leave empty >>>
+SITE SIZE:
+- width: <W> m, height: <H> m
